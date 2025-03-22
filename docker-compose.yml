@@ -1,0 +1,31 @@
+services:
+  web:
+    image: george740/php-sample-application-web:latest
+    container_name: php_app
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    networks:
+      - app_network
+
+  db:
+    image: george740/mysql-db:latest
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: php_app
+      MYSQL_USER: php_user
+      MYSQL_PASSWORD: php_pass
+    ports:
+      - "3306:3306"
+    networks:
+      - app_network
+    volumes:
+      - db_data:/var/lib/mysql          
+
+networks:
+  app_network:
+
+volumes:
+  db_data:
